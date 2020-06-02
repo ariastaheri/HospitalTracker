@@ -1,42 +1,68 @@
-const mongoose = require('mongoose');
-const mongooseUniqueValidator = require('mongoose-unique-validator');
+const mongoose = require("mongoose");
+const mongooseUniqueValidator = require("mongoose-unique-validator");
+const bcrypt = require("bcryptjs");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     userId: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    roles: [{
+    roles: [
+      {
         type: String,
-        required: true
-    }],
+        required: true,
+      },
+    ],
     status: {
-        type: String,
-        required: true      
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  try {
+    if (this._update.$set.password) {
+      const hashed = await bcrypt.hash(this._update.$set.password, 10);
+      this._update.$set.password = hashed;
     }
-},{
-    timestamps: true
-})
+    next();
+  } catch (err) {
+    return next(err);
+  }
+});
 
-userSchema.plugin(mongooseUniqueValidator);
+module.exports.AddUser = (newUser, callback) => {
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) throw err;
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+      newUser.password = hash;
+      newUser.save(callback);
+    });
+  });
+};
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
