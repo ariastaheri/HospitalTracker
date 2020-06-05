@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <div class="row" id="full-row">
+    <div class="col-md-5">
+      <div class="align-self-center justify-content-center signup-info">
+        <h1>Sign Up</h1>
+        <br />
+        <p>
+          Please enter your information below to register for the application.
+        </p>
+        <br />
+
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="Please enter your username"
+            [formControl]="username"
+            required
+          />
+          <mat-error *ngIf="username.invalid">{{
+            getErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input
+            matInput
+            placeholder="Please enter your email address"
+            [formControl]="email"
+            required
+          />
+          <mat-error *ngIf="email.invalid">{{
+            getEmailErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Please enter your password" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Retype Password</mat-label>
+          <input matInput placeholder="Please retype your password" required />
+        </mat-form-field>
+        <br />
+        <span>Please select your role:</span>
+        <br />
+        <br />
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button value="1">Doctor</mat-radio-button>
+          <mat-radio-button value="2">Nurse</mat-radio-button>
+        </mat-radio-group>
+        <br />
+        <br />
+        <button mat-flat-button color="primary">Sign Up</button>
+        <span
+          >Already have an account?
+          <a href="/login" routerLink="/login">Login now</a></span
+        >
+      </div>
+    </div>
+    <div class="col-md-7">
+      <img
+        class="img-responsive"
+        id="intro-image"
+        src="../../assets/connected-digital-health.png"
+      />
+      <div class="overlay"></div>
+    </div>
+  </div>
+</div>
