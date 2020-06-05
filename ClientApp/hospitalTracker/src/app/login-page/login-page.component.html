@@ -1,1 +1,49 @@
-<p>login-page works!</p>
+<div class="container-fluid">
+  <div class="row" id="full-row">
+    <div class="col-md-5">
+      <div class="align-self-center justify-content-center signup-info">
+        <h1>Sign in</h1>
+        <br />
+        <br />
+        <p>
+          Please enter your username and password to login to the dashboard.
+        </p>
+        <br />
+        <br />
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="Please enter your username"
+            [formControl]="username"
+            required
+          />
+          <mat-error *ngIf="username.invalid">{{
+            getErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+        <br />
+        <br />
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Please enter your password" required />
+        </mat-form-field>
+        <br />
+        <br />
+        <button mat-flat-button color="primary">Login</button>
+        <span
+          >Don't have an account?
+          <a href="/register" routerLink="/register">Register Now</a></span
+        >
+      </div>
+    </div>
+    <div class="col-md-7">
+      <img
+        class="img-responsive"
+        id="intro-image"
+        src="../../assets/connected-digital-health.png"
+      />
+      <div class="overlay"></div>
+    </div>
+  </div>
+</div>
