@@ -6,14 +6,9 @@ import { DashboardComponent } from "src/app/components/dashboard/dashboard.compo
 import { PatientProfileComponent } from "src/app/components/patient-profile/patient-profile.component";
 import { NewPatientComponent } from "src/app/components/new-patient/new-patient.component";
 import { NewVisitComponent } from "src/app/components/new-visit/new-visit.component";
-
-const routes: Routes = [
-  { path: "profile", component: ProfilePageComponent },
-  { path: "dashboard", component: DashboardComponent },
-  { path: "patient-profile", component: PatientProfileComponent },
-  { path: "add-patient", component: NewPatientComponent },
-  { path: "add-visit", component: NewVisitComponent },
-];
+import { HeaderComponent } from "src/app/components/header/header.component";
+import { FooterComponent } from "src/app/components/footer/footer.component";
+import { HomeComponent } from "./home.component";
 
 @NgModule({
   declarations: [
@@ -22,14 +17,22 @@ const routes: Routes = [
     PatientProfileComponent,
     NewPatientComponent,
     NewVisitComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
   ],
-  imports: [CommonModule, RouterModule.forRoot(routes)],
+  imports: [CommonModule, RouterModule],
   exports: [
     ProfilePageComponent,
     DashboardComponent,
     PatientProfileComponent,
     NewPatientComponent,
     NewVisitComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
+    RouterModule,
   ],
+  bootstrap: [HomeComponent],
 })
 export class HomeModule {}

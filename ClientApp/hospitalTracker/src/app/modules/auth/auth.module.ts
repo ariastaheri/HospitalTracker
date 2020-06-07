@@ -12,11 +12,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthComponent } from "./auth.component";
 
-const routes: Routes = [
-  { path: "login", component: LoginPageComponent },
-  { path: "register", component: RegisterPageComponent },
-];
-
 @NgModule({
   declarations: [RegisterPageComponent, LoginPageComponent, AuthComponent],
   imports: [
@@ -28,9 +23,15 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule,
   ],
-  exports: [RegisterPageComponent, LoginPageComponent, AuthComponent],
+  exports: [
+    RegisterPageComponent,
+    LoginPageComponent,
+    AuthComponent,
+    RouterModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AuthComponent],
 })
 export class AuthModule {}
