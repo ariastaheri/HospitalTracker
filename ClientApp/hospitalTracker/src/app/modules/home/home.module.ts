@@ -9,6 +9,13 @@ import { NewVisitComponent } from "src/app/components/new-visit/new-visit.compon
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { FooterComponent } from "src/app/components/footer/footer.component";
 import { HomeComponent } from "./home.component";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import {
+  MatIconModule,
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -21,7 +28,15 @@ import { HomeComponent } from "./home.component";
     FooterComponent,
     HomeComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+  ],
   exports: [
     ProfilePageComponent,
     DashboardComponent,

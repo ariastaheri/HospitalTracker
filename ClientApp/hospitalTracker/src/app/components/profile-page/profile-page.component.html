@@ -1,1 +1,58 @@
-<p>profile-page works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      My Profile
+    </mat-card-title>
+  </mat-card-header>
+  <img *ngIf="true" src="../../../assets/doctor-cartoon-icon.png" />
+  <img *ngIf="false" src="../../../assets/nurse-woman-icon.png" />
+  <mat-card-content>
+    <div class="container-fluid">
+      <div class="container">
+        <div class="row top-space">
+          <div class="col-md-6 col-sm-6">
+            <mat-label>Full Name:</mat-label>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <input matInput type="text" value="Full Name" disabled="true" />
+          </div>
+        </div>
+        <div class="row top-space">
+          <div class="col-md-6 col-sm-6">
+            <mat-label>Email Address:</mat-label>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <input
+              matInput
+              type="email"
+              value="Email Address"
+              disabled="true"
+            />
+          </div>
+        </div>
+        <div class="row top-space">
+          <div class="col-md-6 col-sm-6">
+            <mat-label>Role:</mat-label>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <input matInput type="text" value="Role" disabled="true" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="start">
+    <button *ngIf="true" mat-raised-button color="primary">
+      Edit Profile
+    </button>
+    <button *ngIf="true" mat-raised-button>
+      Change Password
+    </button>
+    <button *ngIf="false" mat-raised-button color="warn">
+      Save Changes
+    </button>
+    <button *ngIf="false" mat-raised-button>
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>

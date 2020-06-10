@@ -1,1 +1,31 @@
-<p>dashboard works!</p>
+<mat-card class="main-card">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="title">Patients' Dashboard</div>
+      <div class="subtitle">
+        Below is the list of all patients registered at the hospital. Click on
+        <i><strong>View More</strong></i> to see the patient's visits.
+      </div>
+      <div class="row">
+        <div
+          class="col-md-4 col-sm-6 col-xs-12"
+          *ngFor="let patient of patients"
+        >
+          <mat-card>
+            <mat-card-title>{{ patient.name }}</mat-card-title>
+            <mat-card-content>
+              Date of Birth: {{ patient.DOB.getFullYear() }}/{{
+                patient.DOB.getMonth() + 1
+              }}/{{ patient.DOB.getDate() }}
+              <br />
+              Gender: {{ patient.gender.toUpperCase() }}
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-raised-button color="accent">View More</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

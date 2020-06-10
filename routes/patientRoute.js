@@ -29,7 +29,8 @@ patientRouter.get("/:id", (req, res) => {
 patientRouter.post("/", (req, res) => {
   const newPatient = new Patient({
     name: req.body.name,
-    visits: req.body.visits,
+    gender: req.body.gender,
+    visits: [],
     dateOfBirth: req.body.dateOfBirth,
     history: req.body.history,
   });

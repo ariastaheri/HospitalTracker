@@ -1,0 +1,86 @@
+mat-card {
+  max-width: 40%;
+  max-height: 930px;
+  margin: 10px auto 25px;
+  padding: 30px 80px 45px;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+  border: 2px solid gray;
+  border-radius: 20px;
+}
+
+mat-card-content {
+  font-size: 18px;
+  margin: 40px 20px;
+}
+
+input {
+  font-size: 16px;
+  padding: 2px;
+}
+
+.top-space {
+  margin-top: 40px;
+}
+
+button {
+  font-size: 16px;
+}
+
+mat-card-actions {
+  position: relative;
+  top: 15px;
+  left: 30px;
+  margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 1200px) {
+  mat-card {
+    max-width: 80%;
+    max-height: 100%;
+    margin-bottom: 30px;
+    padding: 20px 20px 40px 20px;
+  }
+
+  mat-card-content {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  mat-card-actions {
+    position: relative;
+    bottom: 5px;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  mat-card {
+    max-width: 90%;
+    max-height: 100%;
+    margin-bottom: 30px;
+    padding: 20px 20px 40px 20px;
+  }
+
+  mat-card-content {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  mat-card-actions {
+    position: relative;
+    bottom: 5px;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}

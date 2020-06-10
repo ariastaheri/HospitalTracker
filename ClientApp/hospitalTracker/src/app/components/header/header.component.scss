@@ -1,0 +1,42 @@
+.space {
+  flex: 1 1 auto;
+}
+
+mat-icon ~ span {
+  margin-left: 5px;
+}
+
+mat-flat-button {
+  position: relative;
+  top: -3px;
+}
+
+.dropdown-item:hover {
+  background-color: lightblue;
+}
+
+button.dropdown-item {
+  margin: 0;
+  padding: 0;
+}
+li ~ li {
+  margin-left: 40px;
+}
+
+li.nav-item {
+  height: 35px;
+}
+
+.greeting {
+  color: white;
+  margin-right: 15px;
+}
+
+@media only screen and (max-width: 1000px) {
+  li ~ li {
+    margin-left: 0;
+  }
+  .greeting {
+    display: none;
+  }
+}

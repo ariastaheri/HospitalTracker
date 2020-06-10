@@ -9,8 +9,8 @@ module.exports = userRouter;
 userRouter.get("/", (req, res) => {
   User.find()
     .exec()
-    .then((visits) => {
-      res.json(visits);
+    .then((users) => {
+      res.json(users);
     })
     .catch((err) => {
       res.json({
