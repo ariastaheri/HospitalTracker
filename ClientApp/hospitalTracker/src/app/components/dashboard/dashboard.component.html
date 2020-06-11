@@ -6,10 +6,18 @@
         Below is the list of all patients registered at the hospital. Click on
         <i><strong>View More</strong></i> to see the patient's visits.
       </div>
+      <mat-form-field>
+        <mat-label>Filter By Name</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Enter Name"
+        />
+      </mat-form-field>
       <div class="row">
         <div
           class="col-md-4 col-sm-6 col-xs-12"
-          *ngFor="let patient of patients"
+          *ngFor="let patient of filteredPatients"
         >
           <mat-card>
             <mat-card-title>{{ patient.name }}</mat-card-title>
