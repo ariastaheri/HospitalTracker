@@ -4,7 +4,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { ProfilePageComponent } from "src/app/components/profile-page/profile-page.component";
 import { DashboardComponent } from "src/app/components/dashboard/dashboard.component";
 import { PatientProfileComponent } from "src/app/components/patient-profile/patient-profile.component";
-import { NewPatientComponent } from "src/app/components/new-patient/new-patient.component";
 import { NewVisitComponent } from "src/app/components/new-visit/new-visit.component";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { FooterComponent } from "src/app/components/footer/footer.component";
@@ -15,14 +14,20 @@ import {
   MatButtonModule,
   MatCardModule,
   MatInputModule,
+  MatDialogModule,
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatTabsModule,
+  MatAutocompleteModule,
 } from "@angular/material";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     ProfilePageComponent,
     DashboardComponent,
     PatientProfileComponent,
-    NewPatientComponent,
     NewVisitComponent,
     HeaderComponent,
     FooterComponent,
@@ -36,12 +41,19 @@ import {
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ProfilePageComponent,
     DashboardComponent,
     PatientProfileComponent,
-    NewPatientComponent,
     NewVisitComponent,
     HeaderComponent,
     FooterComponent,

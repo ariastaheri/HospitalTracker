@@ -20,10 +20,13 @@
         <a class="nav-link" [routerLink]="'/user/profile/123'">My Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/user/new-patient'">Add New Patient</a>
+        <a class="nav-link" (click)="openDialog()">Add New Patient</a>
       </li>
       <li class="nav-item">
-        <button class="btn navbar-btn btn-primary">
+        <a class="nav-link" [routerLink]="'/user/new-visit'">Add New Visit</a>
+      </li>
+      <li class="nav-item">
+        <button class="btn navbar-btn btn-info">
           Sign Out
         </button>
       </li>

@@ -1,1 +1,37 @@
-<p>new-patient works!</p>
+<h1 mat-dialog-title class="mat-dialog-title">Add New Patient</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="standard">
+    <mat-label>Patient's Full Name:</mat-label>
+    <input matInput required />
+  </mat-form-field>
+  <label id="example-radio-group-label">Gender: </label>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+  >
+    <mat-radio-button
+      class="example-radio-button"
+      *ngFor="let gender of genders"
+      [value]="gender"
+    >
+      {{ gender }}
+    </mat-radio-button>
+  </mat-radio-group>
+  <mat-form-field>
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [matDatepicker]="picker" required />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>History of Patient</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary">
+    Add Patient
+  </button>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

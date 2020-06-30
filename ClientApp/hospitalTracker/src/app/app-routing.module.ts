@@ -39,10 +39,6 @@ const routes: Routes = [
         component: DashboardComponent, // another child route component that the router renders
       },
       {
-        path: "new-patient",
-        component: NewPatientComponent, // another child route component that the router renders
-      },
-      {
         path: "new-visit",
         component: NewVisitComponent, // another child route component that the router renders
       },

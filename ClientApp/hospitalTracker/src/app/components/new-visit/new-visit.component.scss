@@ -1,0 +1,40 @@
+.main-card {
+  width: 75%;
+  margin: 10px auto 40px;
+  min-height: 500px;
+  z-index: 0;
+}
+
+.form {
+  width: 80%;
+}
+
+.container {
+  width: 100%;
+}
+
+.title {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  height: 80px;
+  margin-top: 20px;
+}
+
+.symptoms,
+.tests,
+.dignosis,
+.meds {
+  width: 100%;
+}
+
+.row {
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .form ~ .date {
+    margin-left: 5%;
+    width: 30%;
+  }
+}

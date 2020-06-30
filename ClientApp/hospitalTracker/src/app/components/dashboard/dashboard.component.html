@@ -29,7 +29,13 @@
               Gender: {{ patient.gender.toUpperCase() }}
             </mat-card-content>
             <mat-card-actions align="end">
-              <button mat-raised-button color="accent">View More</button>
+              <button
+                mat-raised-button
+                color="primary"
+                [routerLink]="['/user/patient', patient._id]"
+              >
+                View More
+              </button>
             </mat-card-actions>
           </mat-card>
         </div>

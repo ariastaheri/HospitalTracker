@@ -1,1 +1,89 @@
-<p>new-visit works!</p>
+<mat-card class="main-card">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="title">Add New Visit</div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="form">
+            <input
+              matInput
+              placeholder="Search Patients"
+              aria-label="Patient"
+              [matAutocomplete]="auto"
+              [formControl]="patientControl"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="patientDisplay"
+              (optionSelected)="onPatientSelected($event.option)"
+            >
+              <mat-option
+                *ngFor="let patient of filteredPatients | async"
+                [value]="patient"
+              >
+                <span>{{ patient.name }}</span> |
+                <small
+                  >Date of birth:
+                  {{ patient.DOB.toString().substring(4, 15) }}</small
+                >
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="date">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field class="symptoms" appearance="standard">
+            <mat-label>Symptoms</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <mat-form-field class="tests" appearance="standard">
+            <mat-label>Tests Ordered</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field class="dignosis" appearance="standard">
+            <mat-label>Diagnosis</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <div class="col-md-8"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="meds" appearance="standard">
+            <mat-label>Medications Prescribed</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+    </div>
+  </div>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary">Save Visit</button>
+    <button mat-raised-button color="warn">Clear Form</button>
+  </mat-card-actions>
+</mat-card>

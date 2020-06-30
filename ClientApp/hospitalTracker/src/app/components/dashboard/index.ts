@@ -8,6 +8,7 @@ export class Patient {
 }
 
 export class Visit {
+  _id: string;
   date: Date;
   diagnosis: string;
   tests: string;

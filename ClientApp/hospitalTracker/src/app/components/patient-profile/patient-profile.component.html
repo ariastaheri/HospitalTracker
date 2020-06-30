@@ -1,1 +1,89 @@
-<p>patient-profile works!</p>
+<mat-card class="main-card">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="title">
+        <span>Patient Profile</span>
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/user/new-visit', { id: profilePatient._id }]"
+        >
+          <mat-icon>add</mat-icon>Add Visit
+        </button>
+      </div>
+
+      <br />
+      <br />
+      <mat-tab-group>
+        <mat-tab label="Patient Details">
+          <img src="../../../assets/patient_walking_with_iv_bag_md_wm.png" />
+          <br />
+          <br />
+          <div class="container">
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Full Name</mat-label>
+                <input matInput disabled [value]="profilePatient.name" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                  matInput
+                  disabled
+                  [value]="profilePatient.DOB.toString().substring(4, 15)"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Full History (HPI)</mat-label>
+                <textarea
+                  matInput
+                  disabled
+                  [value]="profilePatient.history"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Visits">
+          <div class="container-fluid">
+            <div class="container">
+              <div class="row">
+                <div class="no-visit" *ngIf="profilePatient.visits.length == 0">
+                  Patient has no visits to the hospital.
+                </div>
+                <div
+                  class="col-md-6 col-sm-12"
+                  *ngFor="let visit of profilePatient.visits"
+                >
+                  <mat-card class="visit-card">
+                    <mat-card-title>{{
+                      visit.date.toString().substring(0, 15)
+                    }}</mat-card-title>
+                    <mat-card-content>
+                      <span class="label-visit">Symptoms:</span>
+                      {{ visit.symptoms }} <br />
+                      <span class="label-visit">Tests Ran:</span>
+                      {{ visit.tests }} <br />
+                      <span class="label-visit">Diagnosis:</span>
+                      {{ visit.diagnosis }} <br />
+                      <span class="label-visit">Medications:</span>
+                      {{ visit.meds }} <br />
+                    </mat-card-content>
+                    <mat-card-actions align="start">
+                      <button mat-raised-button color="primary">Edit</button>
+                      <button mat-raised-button color="warn">Delete</button>
+                    </mat-card-actions>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</mat-card>
