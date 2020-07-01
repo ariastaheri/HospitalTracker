@@ -11,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthComponent } from "./auth.component";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [RegisterPageComponent, LoginPageComponent, AuthComponent],
@@ -24,6 +25,7 @@ import { AuthComponent } from "./auth.component";
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    HttpClientModule,
   ],
   exports: [
     RegisterPageComponent,

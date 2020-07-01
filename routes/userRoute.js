@@ -60,7 +60,7 @@ userRouter.post("/", (req, res) => {
     status: req.body.status,
   });
 
-  User.AddUser(newUser, (err, saved) => {
+  newUser.AddUser(newUser, (err, saved) => {
     if (err) {
       res.json({
         error: err,

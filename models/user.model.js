@@ -53,7 +53,7 @@ userSchema.pre("findOneAndUpdate", async function (next) {
   }
 });
 
-module.exports.AddUser = (newUser, callback) => {
+const AddUser = (newUser, callback) => {
   bcrypt.genSalt(10, (err, salt) => {
     if (err) throw err;
     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -62,6 +62,8 @@ module.exports.AddUser = (newUser, callback) => {
     });
   });
 };
+
+userSchema.methods.AddUser = AddUser;
 
 const User = mongoose.model("User", userSchema);
 

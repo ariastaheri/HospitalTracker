@@ -12,6 +12,9 @@
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input
+            [(ngModel)]="userToRegister.userId"
+            name="name"
+            type="text"
             matInput
             placeholder="Please enter your username"
             [formControl]="username"
@@ -23,9 +26,28 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input
+            [(ngModel)]="userToRegister.name"
+            name="full name"
+            type="text"
+            matInput
+            placeholder="Please enter your full name"
+            [formControl]="fullname"
+            required
+          />
+          <mat-error *ngIf="fullname.invalid">{{
+            getNameErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Email Address</mat-label>
           <input
             matInput
+            [(ngModel)]="userToRegister.email"
+            name="email"
+            type="email"
             placeholder="Please enter your email address"
             [formControl]="email"
             required
@@ -37,30 +59,48 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Please enter your password" required />
+          <input
+            matInput
+            [(ngModel)]="userToRegister.password"
+            name="password"
+            type="password"
+            [formControl]="password"
+            placeholder="Please enter your password"
+            required
+          />
+          <mat-error *ngIf="password.invalid">{{
+            getPasswordErrorMessage()
+          }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Retype Password</mat-label>
-          <input matInput placeholder="Please retype your password" required />
-        </mat-form-field>
         <br />
-        <span>Please select your role:</span>
+        <span>Please select your role: <small>(Required)</small></span>
         <br />
         <br />
-        <mat-radio-group aria-label="Select an option">
-          <mat-radio-button value="1">Doctor</mat-radio-button>
-          <mat-radio-button value="2">Nurse</mat-radio-button>
+        <mat-radio-group
+          aria-label="Select an option"
+          [(ngModel)]="userToRegister.role"
+        >
+          <mat-radio-button value="Doctor">Doctor</mat-radio-button>
+          <mat-radio-button value="Nurse">Nurse</mat-radio-button>
         </mat-radio-group>
         <br />
         <br />
-        <button mat-flat-button color="primary">Sign Up</button>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="validateForm()"
+          (click)="registerUser()"
+        >
+          Sign Up
+        </button>
         <span
           >Already have an account?
           <a [routerLink]="'/auth/login'">Login now</a></span
         >
       </div>
     </div>
+
     <div class="col-md-7">
       <img
         class="img-responsive"
