@@ -3,13 +3,6 @@
     <div class="container">
       <div class="title">
         <span>Patient Profile</span>
-        <button
-          mat-raised-button
-          color="primary"
-          [routerLink]="['/user/new-visit', { id: profilePatient._id }]"
-        >
-          <mat-icon>add</mat-icon>Add Visit
-        </button>
       </div>
 
       <br />
@@ -32,7 +25,7 @@
                 <input
                   matInput
                   disabled
-                  [value]="profilePatient.DOB.toString().substring(4, 15)"
+                  [value]="profilePatient.dateOfBirth.slice(0, 10)"
                 />
               </mat-form-field>
             </div>
@@ -61,7 +54,7 @@
                 >
                   <mat-card class="visit-card">
                     <mat-card-title>{{
-                      visit.date.toString().substring(0, 15)
+                      visit.dateOfVisit.slice(0, 10)
                     }}</mat-card-title>
                     <mat-card-content>
                       <span class="label-visit">Symptoms:</span>
@@ -71,7 +64,7 @@
                       <span class="label-visit">Diagnosis:</span>
                       {{ visit.diagnosis }} <br />
                       <span class="label-visit">Medications:</span>
-                      {{ visit.meds }} <br />
+                      {{ visit.prescription }} <br />
                     </mat-card-content>
                     <mat-card-actions align="start">
                       <button mat-raised-button color="primary">Edit</button>

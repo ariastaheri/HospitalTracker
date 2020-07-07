@@ -22,9 +22,7 @@
           <mat-card>
             <mat-card-title>{{ patient.name }}</mat-card-title>
             <mat-card-content>
-              Date of Birth: {{ patient.DOB.getFullYear() }}/{{
-                patient.DOB.getMonth() + 1
-              }}/{{ patient.DOB.getDate() }}
+              Date of Birth: {{ patient.dateOfBirth.slice(0, 10) }}
               <br />
               Gender: {{ patient.gender.toUpperCase() }}
             </mat-card-content>

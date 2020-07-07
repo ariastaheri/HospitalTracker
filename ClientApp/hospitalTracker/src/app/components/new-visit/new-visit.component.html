@@ -15,17 +15,15 @@
             />
             <mat-autocomplete
               #auto="matAutocomplete"
-              [displayWith]="patientDisplay"
               (optionSelected)="onPatientSelected($event.option)"
             >
               <mat-option
                 *ngFor="let patient of filteredPatients | async"
-                [value]="patient"
+                [value]="patient.name"
               >
                 <span>{{ patient.name }}</span> |
                 <small
-                  >Date of birth:
-                  {{ patient.DOB.toString().substring(4, 15) }}</small
+                  >Date of birth: {{ patient.dateOfBirth.slice(0, 10) }}</small
                 >
               </mat-option>
             </mat-autocomplete>
@@ -34,7 +32,12 @@
         <div class="col-md-6">
           <mat-form-field class="date">
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" />
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="visitToBeAdded.dateOfVisit"
+              ngDefaultControl
+            />
             <mat-datepicker-toggle
               matSuffix
               [for]="picker"
@@ -48,14 +51,22 @@
         <div class="col-md-4">
           <mat-form-field class="symptoms" appearance="standard">
             <mat-label>Symptoms</mat-label>
-            <textarea matInput></textarea>
+            <textarea
+              matInput
+              [(ngModel)]="visitToBeAdded.symptoms"
+              ngDefaultControl
+            ></textarea>
           </mat-form-field>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-4">
           <mat-form-field class="tests" appearance="standard">
             <mat-label>Tests Ordered</mat-label>
-            <textarea matInput></textarea>
+            <textarea
+              matInput
+              [(ngModel)]="visitToBeAdded.tests"
+              ngDefaultControl
+            ></textarea>
           </mat-form-field>
         </div>
         <div class="col-md-3"></div>
@@ -65,7 +76,11 @@
         <div class="col-md-4">
           <mat-form-field class="dignosis" appearance="standard">
             <mat-label>Diagnosis</mat-label>
-            <input matInput />
+            <input
+              matInput
+              [(ngModel)]="visitToBeAdded.diagnosis"
+              ngDefaultControl
+            />
           </mat-form-field>
         </div>
         <div class="col-md-8"></div>
@@ -73,9 +88,13 @@
 
       <div class="row">
         <div class="col-md-6">
-          <mat-form-field class="meds" appearance="standard">
+          <mat-form-field class="prescription" appearance="standard">
             <mat-label>Medications Prescribed</mat-label>
-            <textarea matInput></textarea>
+            <textarea
+              matInput
+              [(ngModel)]="visitToBeAdded.prescription"
+              ngDefaultControl
+            ></textarea>
           </mat-form-field>
         </div>
         <div class="col-md-6"></div>
@@ -83,7 +102,11 @@
     </div>
   </div>
   <mat-card-actions align="end">
-    <button mat-raised-button color="primary">Save Visit</button>
-    <button mat-raised-button color="warn">Clear Form</button>
+    <button mat-raised-button color="primary" (click)="saveVisit()">
+      Save Visit
+    </button>
+    <button mat-raised-button color="warn" (click)="resetAll()">
+      Clear Form
+    </button>
   </mat-card-actions>
 </mat-card>

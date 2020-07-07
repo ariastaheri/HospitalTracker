@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Patient } from "../dashboard";
+import { Patient, Visit } from "../dashboard";
 import { FormControl } from "@angular/forms";
 import { Observable, of } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { MatOption } from "@angular/material";
+import { AuthService } from "src/app/modules/auth/auth.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-new-visit",
@@ -12,91 +14,72 @@ import { MatOption } from "@angular/material";
   styleUrls: ["./new-visit.component.scss"],
 })
 export class NewVisitComponent implements OnInit {
-  patients: Patient[] = [
-    {
-      _id: "1",
-      name: "Aria Taheri",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1991, 8, 17),
-      history: "no history for this patient",
-    },
-    {
-      _id: "2",
-      name: "Amin Taheri",
-      visits: [],
-      gender: "male",
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "3",
-      name: "Samir Sharif1",
-      visits: [],
-      gender: "male",
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "4",
-      name: "Anahid Mo2",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "5",
-      name: "Maryam Sharif",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1991, 8, 17),
-      history: "no history for this patient",
-    },
-    {
-      _id: "6",
-      name: "Amir Sheikhtaheri",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "7",
-      name: "Ghazale G",
-      gender: "female",
-      visits: [],
-      DOB: new Date(1991, 5, 4),
-      history: "No History",
-    },
-  ];
+  patients: Patient[];
 
   filteredPatients: Observable<Patient[]>;
   patientControl = new FormControl();
 
-  constructor(private route: ActivatedRoute) {
-    this.filteredPatients = this.patientControl.valueChanges.pipe(
-      startWith(""),
-      map((state) => (state ? this._applyFilter(state) : this.patients.slice()))
-    );
-  }
+  visitToBeAdded = {
+    dateOfVisit: undefined,
+    diagnosis: "",
+    tests: "",
+    prescription: "",
+    symptoms: "",
+  };
+
+  patientVisiting: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private _auth: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
-    console.log(this.route.snapshot.params["id"]);
+    this._auth.getAllPatients().subscribe((res) => {
+      this.patients = res;
+
+      this.filteredPatients = this.patientControl.valueChanges.pipe(
+        startWith(""),
+        map((state) => (state ? this._applyFilter(state) : this.patients))
+      );
+    });
   }
 
-  private _applyFilter(value: Patient): Patient[] {
-    const filterValue = value["name"].toLowerCase();
+  private _applyFilter(value: string): Patient[] {
+    const filterValue = value.toLowerCase();
     return this.patients.filter((patient) => {
-      patient.name.toLowerCase().indexOf(filterValue) > -1;
+      return patient.name.toLowerCase().indexOf(filterValue) > -1;
     });
   }
 
   onPatientSelected(option: MatOption) {
-    console.log(option.value);
+    this.patientVisiting = option.value._id;
   }
 
-  patientDisplay(patient: Object) {
-    return patient ? patient["name"] : undefined;
+  resetAll() {
+    this.visitToBeAdded = {
+      dateOfVisit: undefined,
+      diagnosis: "",
+      tests: "",
+      prescription: "",
+      symptoms: "",
+    };
+  }
+
+  saveVisit() {
+    this._auth
+      .saveNewVisit(this.patientVisiting, this.visitToBeAdded)
+      .subscribe(
+        (res) => {
+          this.toastr.success("", "Visit added successfully!");
+          console.log(res);
+          this.resetAll();
+        },
+        (err) => {
+          this.toastr.error("Process failed", "Something went wrong!");
+          console.log(err);
+        }
+      );
   }
 }

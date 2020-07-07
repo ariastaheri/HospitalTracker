@@ -3,15 +3,15 @@ export class Patient {
   name: string;
   gender: string;
   visits: Array<Visit>;
-  DOB: Date;
+  dateOfBirth: string;
   history: string;
 }
 
 export class Visit {
   _id: string;
-  date: Date;
+  dateOfVisit: string;
   diagnosis: string;
   tests: string;
-  meds: string;
+  prescription: string;
   symptoms: string;
 }

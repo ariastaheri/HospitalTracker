@@ -1,6 +1,8 @@
 const express = require("express");
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const userRouter = express.Router();
 
@@ -50,13 +52,13 @@ userRouter.delete("/:id", (req, res) => {
     });
 });
 
-userRouter.post("/", (req, res) => {
+userRouter.post("/register", (req, res) => {
   let newUser = new User({
     name: req.body.name,
     userId: req.body.userId,
     email: req.body.email,
     password: req.body.password,
-    roles: req.body.roles,
+    roles: req.body.role,
     status: req.body.status,
   });
 
@@ -67,6 +69,53 @@ userRouter.post("/", (req, res) => {
       });
     } else {
       res.json(saved);
+    }
+  });
+});
+
+userRouter.post("/login", (req, res) => {
+  let userData = req.body;
+
+  User.findOne({ userId: userData.userId }, (err, user) => {
+    if (err) {
+      res.json({
+        error: err,
+      });
+    } else {
+      if (!user) {
+        res.json({
+          success: false,
+          message: "User ID not found!",
+        });
+      } else {
+        bcrypt.compare(userData.password, user.password, (err, isMatch) => {
+          if (err)
+            res.json({
+              success: false,
+              message: err,
+            });
+          if (isMatch) {
+            //JWT stuff here
+            let token = jwt.sign(
+              { subject: user._id },
+              process.env.SECRET_KEY,
+              { expiresIn: "7200s" }
+            );
+
+            res.json({
+              success: true,
+              token: token,
+              currentUser: user._id,
+              message: "Success!",
+            });
+          } else {
+            res.json({
+              success: false,
+              message: "Incorrect password entered!",
+            });
+          }
+        });
+      }
     }
   });
 });

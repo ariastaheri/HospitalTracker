@@ -80,12 +80,12 @@ visitRouter.post("/:id", (req, res) => {
     prescription: req.body.prescription,
   });
 
-  Visit.saveVisit(patientId, newVisit);
+  newVisit.saveVisit(patientId, newVisit);
   newVisit.save((err, saved) => {
     if (err) {
-      res.send("error in saving");
+      res.json({ message: "error in saving", success: false });
     } else {
-      res.send("added successfully");
+      res.json({ message: "added successfully", success: true, doc: saved });
     }
   });
 });

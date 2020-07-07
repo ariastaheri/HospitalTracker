@@ -25,13 +25,7 @@ const visitSchema = new Schema({
   },
 });
 
-visitSchema.plugin(mongooseUniqueValidator);
-
-const Visit = mongoose.model("Visit", visitSchema);
-
-module.exports = Visit;
-
-module.exports.saveVisit = function (patientId, visit) {
+visitSchema.methods.saveVisit = function (patientId, visit) {
   Patient.findOneAndUpdate(
     { _id: patientId },
     { $push: { visits: visit } },
@@ -41,3 +35,9 @@ module.exports.saveVisit = function (patientId, visit) {
     }
   );
 };
+
+visitSchema.plugin(mongooseUniqueValidator);
+
+const Visit = mongoose.model("Visit", visitSchema);
+
+module.exports = Visit;

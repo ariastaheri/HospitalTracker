@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Patient } from ".";
-import { MatTableDataSource } from "@angular/material/table";
-import { CloseScrollStrategy } from "@angular/cdk/overlay";
+import { AuthService } from "src/app/modules/auth/auth.service";
 
 @Component({
   selector: "app-dashboard",
@@ -9,71 +8,17 @@ import { CloseScrollStrategy } from "@angular/cdk/overlay";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-  constructor() {}
-
-  patients: Patient[] = [
-    {
-      _id: "1",
-      name: "Aria Taheri",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1991, 8, 17),
-      history: "no history for this patient",
-    },
-    {
-      _id: "2",
-      name: "Amin Taheri",
-      visits: [],
-      gender: "male",
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "3",
-      name: "Samir Sharif1",
-      visits: [],
-      gender: "male",
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "4",
-      name: "Anahid Mo2",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "5",
-      name: "Maryam Sharif",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1991, 8, 17),
-      history: "no history for this patient",
-    },
-    {
-      _id: "6",
-      name: "Amir Sheikhtaheri",
-      gender: "male",
-      visits: [],
-      DOB: new Date(1997, 4, 24),
-      history: "History of mental illness",
-    },
-    {
-      _id: "7",
-      name: "Ghazale G",
-      gender: "female",
-      visits: [],
-      DOB: new Date(1991, 5, 4),
-      history: "No History",
-    },
-  ];
+  patients: Patient[];
 
   filteredPatients: Patient[];
 
+  constructor(private _auth: AuthService) {}
+
   ngOnInit() {
-    this.filteredPatients = this.patients;
+    this._auth.getAllPatients().subscribe((res) => {
+      console.log(res);
+      this.patients = this.filteredPatients = res;
+    });
   }
 
   applyFilter(event: Event) {

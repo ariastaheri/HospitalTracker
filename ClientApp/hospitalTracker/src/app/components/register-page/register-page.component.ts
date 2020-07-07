@@ -73,7 +73,10 @@ export class RegisterPageComponent implements OnInit {
 
   registerUser() {
     this._auth.registerUser(this.userToRegister).subscribe(
-      (res) => this.router.navigateByUrl("/auth/login"),
+      (res) => {
+        console.log(res);
+        this.router.navigateByUrl("/auth/login");
+      },
       (err) => console.log(err)
     );
   }

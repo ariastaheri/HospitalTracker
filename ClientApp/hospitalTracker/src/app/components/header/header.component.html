@@ -17,7 +17,9 @@
         <a class="nav-link" [routerLink]="'/user/dashboard'">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/user/profile/123'">My Profile</a>
+        <a class="nav-link" [routerLink]="['/user/profile', currentUser._id]"
+          >My Profile</a
+        >
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="openDialog()">Add New Patient</a>

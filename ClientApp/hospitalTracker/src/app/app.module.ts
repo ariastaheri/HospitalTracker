@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthModule } from "./modules/auth/auth.module";
@@ -18,6 +18,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
 } from "@angular/material";
+import { ToastrModule } from "ngx-toastr";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent, NewPatientComponent],
@@ -37,8 +39,11 @@ import {
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

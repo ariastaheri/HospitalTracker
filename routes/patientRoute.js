@@ -7,37 +7,41 @@ const patientRouter = express.Router();
 module.exports = patientRouter;
 
 patientRouter.get("/", (req, res) => {
-  Patient.find({}, (err, patients) => {
-    if (err) {
-      res.send("error in req");
-    } else {
-      res.json(patients);
-    }
-  });
+  Patient.find({})
+    .populate("visits")
+    .exec((err, patients) => {
+      if (err) {
+        res.send("error in req");
+      } else {
+        res.json(patients);
+      }
+    });
 });
 
 patientRouter.get("/:id", (req, res) => {
-  Patient.findOne({ _id: req.params.id }, (err, patient) => {
-    if (err) {
-      res.send("error in req");
-    } else {
-      res.json(patient);
-    }
-  });
+  Patient.findOne({ _id: req.params.id })
+    .populate("visits")
+    .exec((err, patient) => {
+      if (err) {
+        res.send("error in req");
+      } else {
+        res.json(patient);
+      }
+    });
 });
 
 patientRouter.post("/", (req, res) => {
   const newPatient = new Patient({
-    name: req.body.name,
-    gender: req.body.gender,
+    name: req.body.fullName,
+    gender: req.body.genderPicked,
     visits: [],
-    dateOfBirth: req.body.dateOfBirth,
+    dateOfBirth: new Date(req.body.DOB),
     history: req.body.history,
   });
 
   newPatient.save({ j: true }, (err, saved) => {
-    if (err) res.send("error in saving");
-    res.send("added successfully");
+    if (err) res.json({ success: false, message: "error in saving" });
+    res.json({ success: true, message: "added successfully" });
   });
 });
 
