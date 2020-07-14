@@ -18,7 +18,15 @@ app.use(cors());
 app.use(bodyparser.json());
 
 // static file
-
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    express.static(
+      path.join(__dirname, "./ClientApp/hospitalTracker/dist/hospitalTracker")
+    )
+  );
+} else {
+  app.use(express.static(path.join(__dirname, "public")));
+}
 // api routes
 app.use("/api/user", userRouter);
 app.use("/api/patient", patientRouter);
