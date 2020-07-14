@@ -1,12 +1,13 @@
 const express = require("express");
 const Visit = require("../models/visit.model");
 const Patient = require("../models/patient.model");
+const verifyToken = require("../middleware/verifyToken");
 
 const patientRouter = express.Router();
 
 module.exports = patientRouter;
 
-patientRouter.get("/", (req, res) => {
+patientRouter.get("/", verifyToken, (req, res) => {
   Patient.find({})
     .populate("visits")
     .exec((err, patients) => {
@@ -18,7 +19,7 @@ patientRouter.get("/", (req, res) => {
     });
 });
 
-patientRouter.get("/:id", (req, res) => {
+patientRouter.get("/:id", verifyToken, (req, res) => {
   Patient.findOne({ _id: req.params.id })
     .populate("visits")
     .exec((err, patient) => {
@@ -30,7 +31,7 @@ patientRouter.get("/:id", (req, res) => {
     });
 });
 
-patientRouter.post("/", (req, res) => {
+patientRouter.post("/", verifyToken, (req, res) => {
   const newPatient = new Patient({
     name: req.body.fullName,
     gender: req.body.genderPicked,
@@ -45,7 +46,7 @@ patientRouter.post("/", (req, res) => {
   });
 });
 
-patientRouter.delete("/:id", (req, res) => {
+patientRouter.delete("/:id", verifyToken, (req, res) => {
   Patient.remove({ _id: req.params.id }, (err) => {
     if (err)
       res.json({
@@ -57,7 +58,7 @@ patientRouter.delete("/:id", (req, res) => {
   });
 });
 
-patientRouter.patch("/:id", (req, res) => {
+patientRouter.patch("/:id", verifyToken, (req, res) => {
   const patientId = req.params.id;
   Patient.findByIdAndUpdate(patientId, { $set: req.body }, (err, doc) => {
     if (err) {

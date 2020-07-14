@@ -56,4 +56,8 @@ export class AuthService {
   changePassword(password, id) {
     return this.http.patch<any>(this._apiUrl + "/user/" + id, password);
   }
+
+  loggedIn() {
+    return !!localStorage.getItem("token");
+  }
 }

@@ -2,13 +2,14 @@ const express = require("express");
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/verifyToken");
 require("dotenv").config();
 
 const userRouter = express.Router();
 
 module.exports = userRouter;
 
-userRouter.get("/", (req, res) => {
+userRouter.get("/", verifyToken, (req, res) => {
   User.find()
     .exec()
     .then((users) => {
@@ -22,7 +23,7 @@ userRouter.get("/", (req, res) => {
     });
 });
 
-userRouter.get("/:id", (req, res) => {
+userRouter.get("/:id", verifyToken, (req, res) => {
   const userId = req.params.id;
   User.findById(userId)
     .exec()
@@ -37,7 +38,7 @@ userRouter.get("/:id", (req, res) => {
     });
 });
 
-userRouter.delete("/:id", (req, res) => {
+userRouter.delete("/:id", verifyToken, (req, res) => {
   const userId = req.params.id;
   Visit.findByIdAndRemove(userId)
     .exec()
@@ -120,7 +121,7 @@ userRouter.post("/login", (req, res) => {
   });
 });
 
-userRouter.patch("/:id", (req, res) => {
+userRouter.patch("/:id", verifyToken, (req, res) => {
   const userId = req.params.id;
   let reqBody = req.body;
 

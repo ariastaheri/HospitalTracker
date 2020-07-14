@@ -21,6 +21,10 @@ import {
 import { ToastrModule } from "ngx-toastr";
 import { FormsModule } from "@angular/forms";
 import { EditVisitComponent } from "./components/edit-visit/edit-visit.component";
+import { AuthGuard } from "./auth.guard";
+import { LoginGuard } from "./login.guard";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { TokenInterceptorService } from "./token-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +52,15 @@ import { EditVisitComponent } from "./components/edit-visit/edit-visit.component
     FormsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    LoginGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

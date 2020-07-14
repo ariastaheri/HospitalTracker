@@ -2,12 +2,13 @@ const express = require("express");
 const Visit = require("../models/visit.model");
 const Patient = require("../models/patient.model");
 const mongoose = require("mongoose");
+const verifyToken = require("../middleware/verifyToken");
 
 const visitRouter = express.Router();
 
 module.exports = visitRouter;
 
-visitRouter.get("/", (req, res) => {
+visitRouter.get("/", verifyToken, (req, res) => {
   Visit.find()
     .exec()
     .then((visits) => {
@@ -21,7 +22,7 @@ visitRouter.get("/", (req, res) => {
     });
 });
 
-visitRouter.get("/:id", (req, res) => {
+visitRouter.get("/:id", verifyToken, (req, res) => {
   const visitId = req.params.id;
   Visit.findById(visitId)
     .exec()
@@ -36,7 +37,7 @@ visitRouter.get("/:id", (req, res) => {
     });
 });
 
-visitRouter.delete("/:id", (req, res) => {
+visitRouter.delete("/:id", verifyToken, (req, res) => {
   const fullId = req.params.id;
   const visitId = fullId.split("|")[0];
   const patientId = fullId.split("|")[1];
@@ -67,7 +68,7 @@ visitRouter.delete("/:id", (req, res) => {
     });
 });
 
-visitRouter.post("/", (req, res) => {
+visitRouter.post("/", verifyToken, (req, res) => {
   const newVisit = new Visit({
     dateOfVisit: req.body.dateOfVisit,
     diagnosis: req.body.diagnosis,
@@ -85,7 +86,7 @@ visitRouter.post("/", (req, res) => {
   });
 });
 
-visitRouter.post("/:id", (req, res) => {
+visitRouter.post("/:id", verifyToken, (req, res) => {
   const patientId = req.params.id;
   const newVisit = new Visit({
     _id: new mongoose.Types.ObjectId(),
@@ -106,7 +107,7 @@ visitRouter.post("/:id", (req, res) => {
   });
 });
 
-visitRouter.patch("/:id", (req, res) => {
+visitRouter.patch("/:id", verifyToken, (req, res) => {
   const visitId = req.params.id;
   Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
     if (err) {
@@ -118,7 +119,7 @@ visitRouter.patch("/:id", (req, res) => {
   });
 });
 
-visitRouter.put("/:id", (req, res) => {
+visitRouter.put("/:id", verifyToken, (req, res) => {
   const visitId = req.params.id;
   Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
     if (err) {

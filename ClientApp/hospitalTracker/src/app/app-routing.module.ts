@@ -6,11 +6,12 @@ import { RegisterPageComponent } from "./components/register-page/register-page.
 import { HomeComponent } from "./modules/home/home.component";
 import { ProfilePageComponent } from "./components/profile-page/profile-page.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { NewPatientComponent } from "./components/new-patient/new-patient.component";
 import { NewVisitComponent } from "./components/new-visit/new-visit.component";
 import { PatientProfileComponent } from "./components/patient-profile/patient-profile.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { PassChangeComponent } from "./components/pass-change/pass-change.component";
+import { AuthGuard } from "./auth.guard";
+import { LoginGuard } from "./login.guard";
 
 const routes: Routes = [
   {
@@ -20,10 +21,12 @@ const routes: Routes = [
       {
         path: "login", // child route path
         component: LoginPageComponent, // child route component that the router renders
+        canActivate: [LoginGuard],
       },
       {
         path: "register",
         component: RegisterPageComponent, // another child route component that the router renders
+        canActivate: [LoginGuard],
       },
     ],
   },
@@ -34,22 +37,27 @@ const routes: Routes = [
       {
         path: "profile/:id", // child route path
         component: ProfilePageComponent, // child route component that the router renders
+        canActivate: [AuthGuard],
       },
       {
         path: "dashboard",
         component: DashboardComponent, // another child route component that the router renders
+        canActivate: [AuthGuard],
       },
       {
         path: "new-visit",
         component: NewVisitComponent, // another child route component that the router renders
+        canActivate: [AuthGuard],
       },
       {
         path: "patient/:id",
         component: PatientProfileComponent, // another child route component that the router renders
+        canActivate: [AuthGuard],
       },
       {
         path: "password/:id",
         component: PassChangeComponent, // another child route component that the router renders
+        canActivate: [AuthGuard],
       },
     ],
   },
