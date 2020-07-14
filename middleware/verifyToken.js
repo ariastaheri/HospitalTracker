@@ -1,27 +1,28 @@
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
+const MESSAGE_UNAUTHORIZED = "Unauthorized request";
 
 module.exports = function verifyToken(req, res, next) {
   if (!req.headers.authorization) {
     return res.status(401).json({
-      success: false,
-      message: "Unauthorized request",
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
     });
   }
   let token = req.headers.authorization.split(" ")[1];
   console.log(token);
   if (token == "null") {
     return res.status(401).json({
-      success: false,
-      message: "Unauthorized request",
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
     });
   }
   let payload = jwt.verify(token, process.env.SECRET_KEY);
   if (!payload) {
     return res.status(401).json({
-      success: false,
-      message: "Unauthorized request",
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
     });
   }
   req.userId = payload.subject;
