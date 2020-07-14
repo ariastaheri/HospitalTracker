@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongooseUniqueValidator = require("mongoose-unique-validator");
 const Patient = require("../models/patient.model");
 
 const Schema = mongoose.Schema;
@@ -35,8 +34,6 @@ visitSchema.methods.saveVisit = function (patientId, visit) {
     }
   );
 };
-
-visitSchema.plugin(mongooseUniqueValidator);
 
 const Visit = mongoose.model("Visit", visitSchema);
 
