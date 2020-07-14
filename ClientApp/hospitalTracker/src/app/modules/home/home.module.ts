@@ -22,6 +22,7 @@ import {
   MatAutocompleteModule,
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { PassChangeComponent } from "src/app/components/pass-change/pass-change.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    PassChangeComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +61,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     FooterComponent,
     HomeComponent,
     RouterModule,
+    PassChangeComponent,
   ],
   bootstrap: [HomeComponent],
 })

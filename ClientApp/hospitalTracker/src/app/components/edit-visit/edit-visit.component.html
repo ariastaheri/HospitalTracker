@@ -1,0 +1,65 @@
+<h1 mat-dialog-title class="mat-dialog-title">Edit Visit</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="standard">
+    <mat-label>Symptoms</mat-label>
+    <textarea
+      matInput
+      name="symptoms"
+      ngDefaultControl
+      [(ngModel)]="visitInfo.symptoms"
+      required
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Date of Visit</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      name="dateOfVisit"
+      ngDefaultControl
+      [(ngModel)]="visitInfo.dateOfVisit"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Tests Ran</mat-label>
+    <textarea
+      matInput
+      name="tests"
+      ngDefaultControl
+      [(ngModel)]="visitInfo.tests"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Prescriptions</mat-label>
+    <textarea
+      matInput
+      name="prescription"
+      ngDefaultControl
+      [(ngModel)]="visitInfo.prescription"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Diagnosis</mat-label>
+    <input
+      matInput
+      name="dignosis"
+      ngDefaultControl
+      [(ngModel)]="visitInfo.diagnosis"
+    />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="saveVisitInfo()"
+    mat-dialog-close
+  >
+    Edit Visit
+  </button>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

@@ -16,10 +16,11 @@
             <mat-autocomplete
               #auto="matAutocomplete"
               (optionSelected)="onPatientSelected($event.option)"
+              [displayWith]="valueMapper"
             >
               <mat-option
                 *ngFor="let patient of filteredPatients | async"
-                [value]="patient.name"
+                [value]="patient"
               >
                 <span>{{ patient.name }}</span> |
                 <small

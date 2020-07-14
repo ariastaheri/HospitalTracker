@@ -28,11 +28,32 @@ export class AuthService {
     return this.http.post<any>(this._apiUrl + "/patient", patient);
   }
 
+  updatePatient(patient, id) {
+    return this.http.patch<any>(this._apiUrl + "/patient/" + id, patient);
+  }
+
   getAllPatients() {
     return this.http.get<any>(this._apiUrl + "/patient");
   }
 
+  getPatient(id) {
+    return this.http.get<any>(this._apiUrl + "/patient/" + id);
+  }
+
   saveNewVisit(patientId, visit) {
     return this.http.post<any>(this._apiUrl + "/visit/" + patientId, visit);
+  }
+
+  deleteVisit(id, patientid) {
+    let fullId = id + "|" + patientid;
+    return this.http.delete<any>(this._apiUrl + "/visit/" + fullId);
+  }
+
+  editVisit(visit) {
+    return this.http.put<any>(this._apiUrl + "/visit/" + visit.id, visit);
+  }
+
+  changePassword(password, id) {
+    return this.http.patch<any>(this._apiUrl + "/user/" + id, password);
   }
 }

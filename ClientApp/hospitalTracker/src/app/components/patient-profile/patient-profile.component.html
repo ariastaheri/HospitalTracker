@@ -16,7 +16,11 @@
             <div>
               <mat-form-field class="example-full-width">
                 <mat-label>Full Name</mat-label>
-                <input matInput disabled [value]="profilePatient.name" />
+                <input
+                  matInput
+                  [disabled]="!editMode"
+                  [(ngModel)]="profilePatient.name"
+                />
               </mat-form-field>
             </div>
             <div>
@@ -24,8 +28,8 @@
                 <mat-label>Date of Birth</mat-label>
                 <input
                   matInput
-                  disabled
-                  [value]="profilePatient.dateOfBirth.slice(0, 10)"
+                  [disabled]="!editMode"
+                  [(ngModel)]="profilePatient.dateOfBirth"
                 />
               </mat-form-field>
             </div>
@@ -34,10 +38,38 @@
                 <mat-label>Full History (HPI)</mat-label>
                 <textarea
                   matInput
-                  disabled
-                  [value]="profilePatient.history"
+                  [disabled]="!editMode"
+                  [(ngModel)]="profilePatient.history"
                 ></textarea>
               </mat-form-field>
+            </div>
+            <div>
+              <button
+                mat-raised-button
+                class="patient-button"
+                [class.hidden]="editMode"
+                color="primary"
+                (click)="toggleEdit()"
+              >
+                Edit Patient
+              </button>
+              <button
+                [class.hidden]="!editMode"
+                mat-raised-button
+                class="patient-button"
+                (click)="savePatientUpdate()"
+                color="warn"
+              >
+                Save Changes
+              </button>
+              <button
+                [class.hidden]="!editMode"
+                mat-raised-button
+                class="patient-button"
+                (click)="toggleEdit()"
+              >
+                Close
+              </button>
             </div>
           </div>
         </mat-tab>
@@ -67,8 +99,20 @@
                       {{ visit.prescription }} <br />
                     </mat-card-content>
                     <mat-card-actions align="start">
-                      <button mat-raised-button color="primary">Edit</button>
-                      <button mat-raised-button color="warn">Delete</button>
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="editVisit(visit)"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="deleteVisit(visit._id, profilePatient._id)"
+                      >
+                        Delete
+                      </button>
                     </mat-card-actions>
                   </mat-card>
                 </div>

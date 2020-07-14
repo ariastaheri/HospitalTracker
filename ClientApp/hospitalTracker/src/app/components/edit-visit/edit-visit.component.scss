@@ -1,0 +1,26 @@
+button ~ button {
+  margin-left: 15px;
+}
+
+.example-radio-group {
+  display: inline;
+
+  margin: 15px 20px;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+mat-form-field,
+mat-radio-group {
+  display: block;
+  width: 100%;
+}
+
+.mat-dialog-title {
+  margin: -24px -24px 0;
+  padding: 20px;
+  background-color: cornflowerblue;
+  color: white;
+}

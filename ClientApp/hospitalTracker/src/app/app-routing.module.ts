@@ -10,6 +10,7 @@ import { NewPatientComponent } from "./components/new-patient/new-patient.compon
 import { NewVisitComponent } from "./components/new-visit/new-visit.component";
 import { PatientProfileComponent } from "./components/patient-profile/patient-profile.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { PassChangeComponent } from "./components/pass-change/pass-change.component";
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
       {
         path: "patient/:id",
         component: PatientProfileComponent, // another child route component that the router renders
+      },
+      {
+        path: "password/:id",
+        component: PassChangeComponent, // another child route component that the router renders
       },
     ],
   },

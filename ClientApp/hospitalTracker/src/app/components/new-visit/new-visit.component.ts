@@ -47,6 +47,9 @@ export class NewVisitComponent implements OnInit {
   }
 
   private _applyFilter(value: string): Patient[] {
+    if (typeof value !== "string") {
+      return;
+    }
     const filterValue = value.toLowerCase();
     return this.patients.filter((patient) => {
       return patient.name.toLowerCase().indexOf(filterValue) > -1;
@@ -54,6 +57,7 @@ export class NewVisitComponent implements OnInit {
   }
 
   onPatientSelected(option: MatOption) {
+    console.log(option);
     this.patientVisiting = option.value._id;
   }
 
@@ -67,18 +71,21 @@ export class NewVisitComponent implements OnInit {
     };
   }
 
+  valueMapper(key) {
+    return key ? key.name : undefined;
+  }
+
   saveVisit() {
     this._auth
       .saveNewVisit(this.patientVisiting, this.visitToBeAdded)
       .subscribe(
         (res) => {
           this.toastr.success("", "Visit added successfully!");
-          console.log(res);
+
           this.resetAll();
         },
         (err) => {
           this.toastr.error("Process failed", "Something went wrong!");
-          console.log(err);
         }
       );
   }

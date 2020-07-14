@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Change Password
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="container-fluid">
+      <div class="container">
+        <div class="row top-space">
+          <div class="col-md-4 col-sm-4"></div>
+          <div class="col-md-4 col-sm-4">
+            <mat-form-field>
+              <input
+                matInput
+                type="password"
+                placeholder="Enter New Password"
+                [(ngModel)]="passwords.newPass"
+                required
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4"></div>
+        </div>
+
+        <div class="row top-space">
+          <div class="col-md-4 col-sm-4"></div>
+          <div class="col-md-4 col-sm-4">
+            <mat-form-field>
+              <input
+                matInput
+                type="password"
+                placeholder="Retype New Password"
+                [(ngModel)]="passwords.confirmPass"
+                required
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4"></div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="start">
+    <button mat-raised-button color="primary" (click)="changePassword()">
+      Change Password
+    </button>
+    <button mat-raised-button (click)="back()">
+      Back
+    </button>
+  </mat-card-actions>
+</mat-card>

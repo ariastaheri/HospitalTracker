@@ -37,16 +37,32 @@ visitRouter.get("/:id", (req, res) => {
 });
 
 visitRouter.delete("/:id", (req, res) => {
-  const visitId = req.params.id;
+  const fullId = req.params.id;
+  const visitId = fullId.split("|")[0];
+  const patientId = fullId.split("|")[1];
+
+  Patient.findByIdAndUpdate(patientId, { $pull: { visits: visitId } })
+    .exec()
+    .then(() => {})
+    .catch(() => {
+      return res.status(500).json({
+        message: "Something went wrong in patient's visit removal",
+        success: false,
+      });
+    });
+
   Visit.findByIdAndRemove(visitId)
     .exec()
     .then(() => {
-      res.json("done");
+      res.json({
+        success: true,
+        message: "Visit removed successfully!",
+      });
     })
     .catch((err) => {
       res.status(500).json({
-        message: "Something went wrong",
-        error: err,
+        message: err,
+        success: false,
       });
     });
 });
@@ -91,6 +107,18 @@ visitRouter.post("/:id", (req, res) => {
 });
 
 visitRouter.patch("/:id", (req, res) => {
+  const visitId = req.params.id;
+  Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+    res.json(doc);
+  });
+});
+
+visitRouter.put("/:id", (req, res) => {
   const visitId = req.params.id;
   Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
     if (err) {

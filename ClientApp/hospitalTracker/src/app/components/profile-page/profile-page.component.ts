@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/modules/auth/auth.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -26,7 +26,8 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private activeRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,5 +59,9 @@ export class ProfilePageComponent implements OnInit {
           this.toastr.error("", "Update failed!");
         }
       );
+  }
+
+  changePassword() {
+    this.router.navigate(["/user/password/" + this.currentUser._id]);
   }
 }

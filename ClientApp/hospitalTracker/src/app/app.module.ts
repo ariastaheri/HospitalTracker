@@ -20,10 +20,16 @@ import {
 } from "@angular/material";
 import { ToastrModule } from "ngx-toastr";
 import { FormsModule } from "@angular/forms";
+import { EditVisitComponent } from "./components/edit-visit/edit-visit.component";
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent, NewPatientComponent],
-  entryComponents: [NewPatientComponent],
+  declarations: [
+    AppComponent,
+    PageNotFoundComponent,
+    NewPatientComponent,
+    EditVisitComponent,
+  ],
+  entryComponents: [NewPatientComponent, EditVisitComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

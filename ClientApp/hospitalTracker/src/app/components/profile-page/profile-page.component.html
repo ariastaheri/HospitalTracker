@@ -70,7 +70,7 @@
     >
       Edit Profile
     </button>
-    <button *ngIf="!editMode" mat-raised-button>
+    <button *ngIf="!editMode" mat-raised-button (click)="changePassword()">
       Change Password
     </button>
     <button
