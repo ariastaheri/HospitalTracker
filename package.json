@@ -4,6 +4,8 @@
   "description": "hospital tracker mean app",
   "main": "server.js",
   "scripts": {
+    "preinstall": "npm link @angular/cli ",
+    "heroku-postbuild": "ng build --prod",
     "ng": "ng",
     "test": "echo \"Error: no test specified\" && exit 1",
     "startDev": "nodemon server.js",
