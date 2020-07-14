@@ -18,7 +18,6 @@ app.use(cors());
 app.use(bodyparser.json());
 
 // static file
-app.use(express.static(path.join(__dirname, "public")));
 
 // api routes
 app.use("/api/user", userRouter);
