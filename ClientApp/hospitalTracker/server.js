@@ -19,13 +19,9 @@ app.use(bodyparser.json());
 
 // static file
 if (process.env.NODE_ENV === "production") {
-  app.use(
-    express.static(path.join(__dirname, "ClientApp/hospitalTracker/dist"))
-  );
+  app.use(express.static(path.join(__dirname, "dist")));
   app.get("*", function (req, res) {
-    res.sendFile(
-      path.join(__dirname, "ClientApp/hospitalTracker/dist/index.html")
-    );
+    res.sendFile(path.join(__dirname, "dist/index.html"));
   });
 } else {
   app.use(express.static(path.join(__dirname, "public")));

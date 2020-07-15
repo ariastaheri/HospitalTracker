@@ -5,13 +5,12 @@
   "main": "server.js",
   "scripts": {
     "ng": "ng",
-    "build": "ng build",
+    "build": "ng build --prod",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test": "echo \"Error: no test specified\" && exit 1",
     "startDev": "nodemon server.js",
-    "start": "node server.js",
-    "postinstall": "ng build --aot --prod "
+    "start": "node server.js"
   },
   "private": true,
   "dependencies": {
