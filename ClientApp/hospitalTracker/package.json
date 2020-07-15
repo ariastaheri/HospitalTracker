@@ -1,14 +1,17 @@
 {
   "name": "hospital-tracker",
   "version": "0.0.0",
+  "description": "hospital tracker mean app",
+  "main": "server.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --prod"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startDev": "nodemon server.js",
+    "start": "node server.js",
+    "postinstall": "ng build --aot --prod "
   },
   "private": true,
   "dependencies": {
