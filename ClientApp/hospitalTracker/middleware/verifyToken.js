@@ -20,6 +20,7 @@ module.exports = function verifyToken(req, res, next) {
   }
   let payload = jwt.verify(token, process.env.SECRET_KEY);
   if (!payload) {
+    console.log("unverified token");
     return res.status(401).json({
       authorized: false,
       message: MESSAGE_UNAUTHORIZED,
