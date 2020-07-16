@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Patient, Visit } from "../dashboard";
 import { FormControl } from "@angular/forms";
 import { Observable, of } from "rxjs";
@@ -32,18 +32,30 @@ export class NewVisitComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _auth: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this._auth.getAllPatients().subscribe((res) => {
-      this.patients = res;
+    this._auth.getAllPatients().subscribe(
+      (res) => {
+        this.patients = res;
 
-      this.filteredPatients = this.patientControl.valueChanges.pipe(
-        startWith(""),
-        map((state) => (state ? this._applyFilter(state) : this.patients))
-      );
-    });
+        this.filteredPatients = this.patientControl.valueChanges.pipe(
+          startWith(""),
+          map((state) => (state ? this._applyFilter(state) : this.patients))
+        );
+      },
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
+    );
   }
 
   private _applyFilter(value: string): Patient[] {
@@ -85,7 +97,15 @@ export class NewVisitComponent implements OnInit {
           this.resetAll();
         },
         (err) => {
-          this.toastr.error("Process failed", "Something went wrong!");
+          if (
+            !err.error.authorized &&
+            err.error.message == "Unauthorized request"
+          ) {
+            this._auth.logout();
+            this.router.navigate(["/auth/login"]);
+          } else {
+            this.toastr.error("Process failed", "Something went wrong!");
+          }
         }
       );
   }

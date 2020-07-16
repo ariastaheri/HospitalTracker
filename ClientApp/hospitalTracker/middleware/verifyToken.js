@@ -4,6 +4,7 @@ require("dotenv").config();
 const MESSAGE_UNAUTHORIZED = "Unauthorized request";
 
 module.exports = function verifyToken(req, res, next) {
+  console.log("starting...");
   if (!req.headers.authorization) {
     return res.status(401).json({
       authorized: false,
@@ -18,14 +19,13 @@ module.exports = function verifyToken(req, res, next) {
       message: MESSAGE_UNAUTHORIZED,
     });
   }
-  let payload = jwt.verify(token, process.env.SECRET_KEY);
-  if (!payload) {
-    console.log("unverified token");
-    return res.status(401).json({
-      authorized: false,
-      message: MESSAGE_UNAUTHORIZED,
-    });
-  }
-  req.userId = payload.subject;
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if (err) {
+      req.authorized = false;
+    } else {
+      req.authorized = true;
+      req.userId = decoded.subject;
+    }
+  });
   next();
 };

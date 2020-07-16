@@ -61,14 +61,23 @@ export class PassChangeComponent implements OnInit {
       let newPassword = {
         password: this.passwords.newPass,
       };
-      this._auth
-        .changePassword(newPassword, this.currentUser._id)
-        .subscribe((res) => {
+      this._auth.changePassword(newPassword, this.currentUser._id).subscribe(
+        (res) => {
           this.toastr.success("Password updated successfully!", "", {
             timeOut: 1500,
           });
           this.router.navigate(["/user/profile/" + this.currentUser._id]);
-        });
+        },
+        (err) => {
+          if (
+            !err.error.authorized &&
+            err.error.message == "Unauthorized request"
+          ) {
+            this._auth.logout();
+            this.router.navigate(["/auth/login"]);
+          }
+        }
+      );
     } else {
       this.passMatch
         ? this.toastr.warning("Please enter a valid password", "", {

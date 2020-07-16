@@ -6,9 +6,17 @@ const verifyToken = require("../middleware/verifyToken");
 
 const visitRouter = express.Router();
 
+const MESSAGE_UNAUTHORIZED = "Unauthorized request";
+
 module.exports = visitRouter;
 
 visitRouter.get("/", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   Visit.find()
     .exec()
     .then((visits) => {
@@ -23,6 +31,12 @@ visitRouter.get("/", verifyToken, (req, res) => {
 });
 
 visitRouter.get("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const visitId = req.params.id;
   Visit.findById(visitId)
     .exec()
@@ -38,6 +52,12 @@ visitRouter.get("/:id", verifyToken, (req, res) => {
 });
 
 visitRouter.delete("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const fullId = req.params.id;
   const visitId = fullId.split("|")[0];
   const patientId = fullId.split("|")[1];
@@ -69,6 +89,12 @@ visitRouter.delete("/:id", verifyToken, (req, res) => {
 });
 
 visitRouter.post("/", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const newVisit = new Visit({
     dateOfVisit: req.body.dateOfVisit,
     diagnosis: req.body.diagnosis,
@@ -87,6 +113,12 @@ visitRouter.post("/", verifyToken, (req, res) => {
 });
 
 visitRouter.post("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const patientId = req.params.id;
   const newVisit = new Visit({
     _id: new mongoose.Types.ObjectId(),
@@ -108,6 +140,12 @@ visitRouter.post("/:id", verifyToken, (req, res) => {
 });
 
 visitRouter.patch("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const visitId = req.params.id;
   Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
     if (err) {
@@ -120,6 +158,12 @@ visitRouter.patch("/:id", verifyToken, (req, res) => {
 });
 
 visitRouter.put("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const visitId = req.params.id;
   Visit.findByIdAndUpdate(visitId, { $set: req.body }, (err, doc) => {
     if (err) {

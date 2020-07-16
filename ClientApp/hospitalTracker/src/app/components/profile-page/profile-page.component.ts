@@ -32,11 +32,23 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser._id = this.activeRoute.snapshot.params["id"];
-    this._auth.getUserDetails(this.currentUser._id).subscribe((user) => {
-      this.currentUser.name = user.name;
-      this.currentUser.email = user.email;
-      this.currentUser.roles = user.roles;
-    });
+    this._auth.getUserDetails(this.currentUser._id).subscribe(
+      (user) => {
+        this.currentUser.name = user.name;
+        this.currentUser.email = user.email;
+        this.currentUser.roles = user.roles;
+      },
+      (err) => {
+        console.log(err.error);
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
+    );
   }
 
   toggleEdit() {
@@ -55,8 +67,15 @@ export class ProfilePageComponent implements OnInit {
           this.toastr.success("", "Update Successful!");
         },
         (err) => {
-          console.log(err);
-          this.toastr.error("", "Update failed!");
+          if (
+            !err.error.authorized &&
+            err.error.message == "Unauthorized request"
+          ) {
+            this._auth.logout();
+            this.router.navigate(["/auth/login"]);
+          } else {
+            this.toastr.error("", "Update failed!");
+          }
         }
       );
   }

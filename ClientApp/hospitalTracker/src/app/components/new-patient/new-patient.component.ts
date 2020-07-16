@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { AuthService } from "src/app/modules/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-new-patient",
@@ -16,7 +17,7 @@ export class NewPatientComponent implements OnInit {
     history: "",
   };
   genders: string[] = ["Male", "Female"];
-  constructor(private _auth: AuthService) {}
+  constructor(private _auth: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -35,7 +36,15 @@ export class NewPatientComponent implements OnInit {
       (res) => {
         console.log(res);
       },
-      (err) => console.log(err)
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
     );
   }
 }

@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AuthService {
-  private _apiUrl = "/api";
+  private _apiUrl = "http://localhost:5000/api";
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
@@ -59,5 +59,10 @@ export class AuthService {
 
   loggedIn() {
     return !!localStorage.getItem("token");
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
   }
 }

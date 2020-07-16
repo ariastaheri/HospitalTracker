@@ -39,7 +39,17 @@ export class EditVisitComponent implements OnInit {
         this.toastr.success("", "Visit updated!");
         window.location.reload();
       },
-      (err) => this.toastr.error("Process failed!", "Error in update!")
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        } else {
+          this.toastr.error("Process failed!", "Error in update!");
+        }
+      }
     );
   }
 }

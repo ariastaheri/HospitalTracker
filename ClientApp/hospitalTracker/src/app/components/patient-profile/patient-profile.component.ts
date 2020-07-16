@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Visit, Patient } from "../dashboard";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "src/app/modules/auth/auth.service";
 import { MatDialog } from "@angular/material";
 import { EditVisitComponent } from "../edit-visit/edit-visit.component";
@@ -31,20 +31,32 @@ export class PatientProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _auth: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.userid = this.route.snapshot.params["id"];
 
-    this._auth.getPatient(this.userid).subscribe((res) => {
-      this.profilePatient = res;
+    this._auth.getPatient(this.userid).subscribe(
+      (res) => {
+        this.profilePatient = res;
 
-      this.profilePatient.dateOfBirth = this.profilePatient.dateOfBirth.slice(
-        0,
-        10
-      );
-    });
+        this.profilePatient.dateOfBirth = this.profilePatient.dateOfBirth.slice(
+          0,
+          10
+        );
+      },
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
+    );
   }
 
   deleteVisit(id, patientid) {
@@ -84,9 +96,20 @@ export class PatientProfileComponent implements OnInit {
 
     let patientId = this.profilePatient._id;
 
-    this._auth.updatePatient(newUpdate, patientId).subscribe((res) => {
-      console.log(res);
-    });
+    this._auth.updatePatient(newUpdate, patientId).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
+    );
 
     this.toggleEdit();
 

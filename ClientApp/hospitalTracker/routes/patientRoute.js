@@ -5,9 +5,17 @@ const verifyToken = require("../middleware/verifyToken");
 
 const patientRouter = express.Router();
 
+const MESSAGE_UNAUTHORIZED = "Unauthorized request";
+
 module.exports = patientRouter;
 
 patientRouter.get("/", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   Patient.find({})
     .populate("visits")
     .exec((err, patients) => {
@@ -20,6 +28,12 @@ patientRouter.get("/", verifyToken, (req, res) => {
 });
 
 patientRouter.get("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   Patient.findOne({ _id: req.params.id })
     .populate("visits")
     .exec((err, patient) => {
@@ -32,6 +46,12 @@ patientRouter.get("/:id", verifyToken, (req, res) => {
 });
 
 patientRouter.post("/", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const newPatient = new Patient({
     name: req.body.fullName,
     gender: req.body.genderPicked,
@@ -47,6 +67,12 @@ patientRouter.post("/", verifyToken, (req, res) => {
 });
 
 patientRouter.delete("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   Patient.remove({ _id: req.params.id }, (err) => {
     if (err)
       res.json({
@@ -59,6 +85,12 @@ patientRouter.delete("/:id", verifyToken, (req, res) => {
 });
 
 patientRouter.patch("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const patientId = req.params.id;
   Patient.findByIdAndUpdate(patientId, { $set: req.body }, (err, doc) => {
     if (err) {

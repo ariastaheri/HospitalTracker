@@ -27,12 +27,23 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser._id = localStorage.getItem("currentUser");
-    this._auth.getUserDetails(this.currentUser._id).subscribe((user) => {
-      this.currentUser.name = user.name;
-      this.currentUser.email = user.email;
-      this.currentUser.roles = user.roles;
-      console.log(this.currentUser);
-    });
+    this._auth.getUserDetails(this.currentUser._id).subscribe(
+      (user) => {
+        this.currentUser.name = user.name;
+        this.currentUser.email = user.email;
+        this.currentUser.roles = user.roles;
+        console.log(this.currentUser);
+      },
+      (err) => {
+        if (
+          !err.error.authorized &&
+          err.error.message == "Unauthorized request"
+        ) {
+          this._auth.logout();
+          this.router.navigate(["/auth/login"]);
+        }
+      }
+    );
   }
 
   openDialog() {

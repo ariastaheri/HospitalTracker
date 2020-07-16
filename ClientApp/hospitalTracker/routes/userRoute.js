@@ -7,9 +7,17 @@ require("dotenv").config();
 
 const userRouter = express.Router();
 
+const MESSAGE_UNAUTHORIZED = "Unauthorized request";
+
 module.exports = userRouter;
 
 userRouter.get("/", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   User.find()
     .exec()
     .then((users) => {
@@ -24,6 +32,12 @@ userRouter.get("/", verifyToken, (req, res) => {
 });
 
 userRouter.get("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const userId = req.params.id;
   User.findById(userId)
     .exec()
@@ -39,6 +53,12 @@ userRouter.get("/:id", verifyToken, (req, res) => {
 });
 
 userRouter.delete("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const userId = req.params.id;
   Visit.findByIdAndRemove(userId)
     .exec()
@@ -122,6 +142,12 @@ userRouter.post("/login", (req, res) => {
 });
 
 userRouter.patch("/:id", verifyToken, (req, res) => {
+  if (!req.authorized) {
+    return res.status(401).json({
+      authorized: false,
+      message: MESSAGE_UNAUTHORIZED,
+    });
+  }
   const userId = req.params.id;
   let reqBody = req.body;
 
